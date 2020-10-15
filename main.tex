@@ -1,0 +1,319 @@
+\documentclass[fontset=macnew]{ctexart}
+\usepackage{fontawesome}
+\usepackage{fontspec}
+\usepackage{bbding}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{ulem}
+\usepackage{wasysym}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{tabu}
+\usepackage{paralist}
+\usepackage{lastpage}
+\usepackage{enumerate} 
+\usepackage{enumitem}
+\usepackage{newtxtext}
+\usepackage{mathptmx}
+\usepackage{xpatch}
+\usepackage{CJKfntef}
+\usepackage{mhchem}
+\usepackage{extarrows}
+\usepackage{linalg}
+\usepackage{makecell}
+\usepackage{graphicx}
+% 数学支持
+\usepackage{amsmath, amssymb}
+\usepackage{upgreek}
+
+% 制定更多颜色
+
+\usepackage{color}
+\definecolor{yellowgreen}{RGB}{253, 204, 138}
+\definecolor{qinglan}{RGB}{0, 255, 255} 
+\definecolor{qinglv}{RGB}{20, 176, 228} 
+
+% 设置页边距
+\usepackage{geometry}
+
+% 设置背景图片
+\usepackage{graphicx}
+\usepackage{eso-pic}
+
+\newcommand{\tr}[1]{\hspace{-0.3em} \textcolor{red}{#1}\hspace{0.1em}} 
+\newcommand{\tq}[1]{\textcolor{teal}{#1}}
+\newcommand{\tb}[1]{\textcolor{blue}{#1}}
+\newcommand{\trq}[1]{\textcolor{red}{#1}}
+
+\newcommand{\point}[1]{\kh{#1分}}
+\newcommand{\kh}[1]{\hspace{-0.1cm}（\hspace{-0.1cm}#1\hspace{-0.1cm}）\hspace{-0.1cm}}
+\newcommand{\khi}[1]{\hspace{-0.1cm}（\hspace{-0.1cm}#1\hspace{-0.1cm}）\hspace{-0.3cm}}
+\newcommand{\dkh}[1]{\hspace{-0.1cm}【\hspace{-0.1cm}#1\hspace{-0.1cm}】\hspace{-0.1cm}}
+\makeatletter
+\SetLabelAlign{hang}{%
+	#1%
+	\aftergroup\adjustparshapeindent}
+%% 编号 #1 会通过 \sbox 存到 \@tempboxa 中，为避免全局设置，
+%% 需要用 \aftergroup 跳到盒子外部来设置
+\newcommand*\adjustparshapeindent{%
+	\@ifnextchar\egroup
+	{\aftergroup\adjustparshapeindent}
+	{\adjustparshapeindent@auxi}}
+\newcommand*\adjustparshapeindent@auxi{%
+	\unless\ifdim\wd\@tempboxa=\labelwidth
+	\adjustparshapeindent@auxii
+	\fi}
+%% 调整 \parshape 的缩进
+\newcommand*\adjustparshapeindent@auxii{%
+	\dimen@ = \dimexpr\wd\@tempboxa-\labelwidth\relax
+	\labelwidth = \wd\@tempboxa
+	\advance\linewidth -\dimen@
+	\advance\leftmargin \dimen@
+	\advance\@totalleftmargin \dimen@
+	\parshape \@ne \@totalleftmargin \linewidth}
+
+\setlist[enumerate]{
+	%leftmargin=2em,%列表整体左缩进
+	itemindent=0em,%条目首行缩进
+	start=1,%开始序号
+	parsep=0.2em,
+	topsep=0.1em,%列表与上下文本间距
+	itemsep=0.1em,%条目间距
+	align=right}
+
+\makeatother
+
+\newcommand{\yssm}{第~\thepage~页\kh{共~\pageref{LastPage}~页}}
+\usepackage{fancyhdr}
+\renewcommand{\headrulewidth}{0pt}
+\pagestyle{fancy}
+\setlength{\footskip}{0.1cm}
+\newlength{\lxsd}
+\newcommand{\xg}[2]{
+	\settowidth{\lxsd}{#1\ }
+	\hangafter 1
+	\hangindent \lxsd
+	\noindent #1\ #2
+}
+\newcommand{\tih}[2]{
+	\settowidth{\lxsd}{\textbf{#1}}
+	\hangafter 1
+	\hangindent \lxsd
+	\noindent \textbf{#1}\,\textbf{#2}
+}
+\newcommand{\tikh}[2]{
+	\settowidth{\lxsd}{\textbf{\kh{#1}}\,}
+	\hangafter 1
+	\hangindent \lxsd
+	\noindent \textbf{\kh{#1}}\,\textbf{#2}
+}
+\usepackage{ifthen}
+
+\newlength{\la}
+\newlength{\lb}
+\newlength{\lc}
+\newlength{\ld}
+\newlength{\laa}
+\newlength{\lbb}
+\newlength{\lcc}
+\newlength{\ldd}
+\newlength{\lee}
+\newlength{\lf}
+\newlength{\lhalf}
+\newlength{\lquarter}
+\newlength{\lmax}
+\newcommand{\xx}[4]{\\[.5pt]%  
+	\settowidth{\la}{A.~\,#1~~~}  
+	\settowidth{\lb}{B.~\,#2~~~}
+	\settowidth{\lc}{C.~\,#3~~~}  
+	\settowidth{\ld}{D.~\,#4~~~}
+	\settowidth{\laa}{A. }  
+	\settowidth{\lbb}{B. }
+	\settowidth{\lcc}{C. }  
+	\settowidth{\ldd}{D. }
+	\ifthenelse{\lengthtest{\la > \lb}}
+	{\setlength{\lmax}{\la}}{\setlength{\lmax}{\lb}}  
+	\ifthenelse{\lengthtest{\lmax < \lc}}  {\setlength{\lmax}{\lc}}  {}  \ifthenelse{\lengthtest{\lmax < \ld}}  {\setlength{\lmax}{\ld}}  {} 
+	\setlength{\lhalf}{0.5\linewidth} 
+	\setlength{\lquarter}{0.25\linewidth}
+	\ifthenelse{\lengthtest{\lmax > \lhalf}}  
+	{\vspace{-0.6cm}
+		\begin{enumerate}[align=hang]
+			\item[A.]#1
+			\item[B.]#2
+			\item[C.]#3
+			\item[D.]#4
+		\end{enumerate}
+	}  {\ifthenelse{\lengthtest{\lmax > \lquarter}}  
+		{\noindent
+			\makebox[\lhalf][l]{A.~\,#1~~~}% 
+			\makebox[\lhalf][l]{B.~\,#2~~~}\\%
+			\makebox[\lhalf][l]{C.~\,#3~~~}%
+			\makebox[\lhalf][l]{D.~\,#4~~~}}% 
+		{\noindent\makebox[\lquarter][l]{A.~\,#1~~~}%
+			\makebox[\lquarter][l]{B.~\, #2~~~}%
+			\makebox[\lquarter][l]{C.~\, #3~~~}%      
+			\makebox[\lquarter][l]{D.~\, #4~~~}}
+}}
+
+\newcommand{\xxiii}[3]{\\[.5pt]%  
+	\settowidth{\la}{A. #1~~~}  
+	\settowidth{\lb}{B. #2~~~}
+	\settowidth{\lc}{C. #3~~~}  
+	\ifthenelse{\lengthtest{\la > \lb}}
+	{\setlength{\lmax}{\la}}{\setlength{\lmax}{\lb}}  
+	\ifthenelse{\lengthtest{\lmax < \lc}}{\setlength{\lmax}{\lc}}{}  
+	\setlength{\lhalf}{0.5\linewidth}
+	\setlength{\lquarter}{0.25\linewidth}
+	\ifthenelse{\lengthtest{\lmax > \lhalf}}
+	{\noindent{}A. #1 \\ B. #2 \\ C. #3 }{  \ifthenelse{\lengthtest{\lmax > \lquarter}}  
+		{\noindent
+			\makebox[\lhalf][l]{A. #1~~~}% 
+			\makebox[\lhalf][l]{B. #2~~~}\\%
+			\makebox[\lhalf][l]{C. #3~~~}}% 
+		{\noindent
+			\makebox[\lquarter][l]{A. #1~~~}% 
+			\makebox[\lquarter][l]{B. #2~~~}%     
+			\makebox[\lquarter][l]{C. #3~~~}}
+}}
+
+\newcommand{\xxv}[5]{\\[.5pt]%  
+	\settowidth{\la}{A. #1~~~}  
+	\settowidth{\lb}{B. #2~~~}
+	\settowidth{\lc}{C. #3~~~} 
+	\settowidth{\ld}{D. #4~~~}  
+	\settowidth{\lee}{E、#5~~~}   
+	\ifthenelse{\lengthtest{\la > \lb}}
+	{\setlength{\lmax}{\la}}{\setlength{\lmax}{\lb}}  
+	\ifthenelse{\lengthtest{\lmax < \lc}}  {\setlength{\lmax}{\lc}}  {} 
+	\ifthenelse{\lengthtest{\lmax < \ld}}  {\setlength{\lmax}{\ld}}  {} 
+	\ifthenelse{\lengthtest{\lmax < \lee}}  {\setlength{\lmax}{\lee}}  {} 
+	\setlength{\lhalf}{0.5\linewidth} 
+	\setlength{\lquarter}{0.25\linewidth}
+	\ifthenelse{\lengthtest{\lmax > \lhalf}}  
+	{\noindent{}A. #1 \\ B. #2 \\ C. #3 \\ D. #4 \\ E、#5}  {  \ifthenelse{\lengthtest{\lmax > \lquarter}}  
+		{\noindent
+			\makebox[\lhalf][l]{A. #1~~~}% 
+			\makebox[\lhalf][l]{B. #2~~~}\\%
+			\makebox[\lhalf][l]{C. #3~~~}%
+			\makebox[\lhalf][l]{D. #4~~~}\\%
+			\makebox[\lhalf][l]{E、#5~~~}}% 
+		{\noindent
+			\makebox[\lquarter][l]{A. #1~~~}% 
+			\makebox[\lquarter][l]{B. #2~~~}%     
+			\makebox[\lquarter][l]{C. #3~~~}%
+			\makebox[\lquarter][l]{D. #4~~~}\\%
+			\makebox[\lquarter][l]{E、#5~~~}}
+}}
+
+\newcommand{\xxvi}[6]{\\[.5pt]%  
+	\settowidth{\la}{A. #1~~~}  
+	\settowidth{\lb}{B. #2~~~}
+	\settowidth{\lc}{C. #3~~~} 
+	\settowidth{\ld}{D. #4~~~}  
+	\settowidth{\lee}{E、#5~~~}
+	\settowidth{\lf}{E、#6~~~}     
+	\ifthenelse{\lengthtest{\la > \lb}}
+	{\setlength{\lmax}{\la}}{\setlength{\lmax}{\lb}}  
+	\ifthenelse{\lengthtest{\lmax < \lc}}  {\setlength{\lmax}{\lc}}  {} 
+	\ifthenelse{\lengthtest{\lmax < \ld}}  {\setlength{\lmax}{\ld}}  {} 
+	\ifthenelse{\lengthtest{\lmax < \lee}}  {\setlength{\lmax}{\lee}}  {}
+	\ifthenelse{\lengthtest{\lmax < \lf}}  {\setlength{\lmax}{\lf}}  {}  
+	\setlength{\lhalf}{0.5\linewidth} 
+	\setlength{\lquarter}{0.25\linewidth}
+	\ifthenelse{\lengthtest{\lmax > \lhalf}}  
+	{\noindent{}A. #1 \\ B. #2 \\ C. #3 \\ D. #4 \\ E、#5 \\ F、#6}  {  \ifthenelse{\lengthtest{\lmax > \lquarter}}  
+		{\noindent
+			\makebox[\lhalf][l]{A. #1~~~}% 
+			\makebox[\lhalf][l]{B. #2~~~}\\%
+			\makebox[\lhalf][l]{C. #3~~~}%
+			\makebox[\lhalf][l]{D. #4~~~}\\%
+			\makebox[\lhalf][l]{E、#5~~~}%
+			\makebox[\lhalf][l]{F、#6~~~}}% 
+		{\noindent
+			\makebox[\lquarter][l]{A. #1~~~}% 
+			\makebox[\lquarter][l]{B. #2~~~}%     
+			\makebox[\lquarter][l]{C. #3~~~}%
+			\makebox[\lquarter][l]{D. #4~~~}\\%
+			\makebox[\lquarter][l]{E、#5~~~}%
+			\makebox[\lquarter][l]{F、#6~~~}}%
+}}
+
+%填空题画线  \tk
+%\newcommand{\tk}[2][2.5]{\; \underline{\hspace{#1 cm} \hphantom{#2} \hspace{#1 cm} } \, }
+\newcommand{\note}{\textcolor{blue}{\faBook} \phantom{h}}
+
+%判断题后面加括号
+\newcommand{\pd}[2][1]{\nolinebreak\dotfill\mbox{\raisebox{-1.8pt}
+		{$\cdots$}(\makebox[#1 cm][c]{
+			\ifthenelse{\boolean{print}}
+			{\ifthenelse{\equal{#2}{t}}{\Checkmark}{\XSolid}}
+			{}
+		})}}
+
+\newboolean{print}
+\setboolean{print}{true}
+
+\usepackage{ulem}
+\newcommand{\tk}[2][0.5]{\;\uline{ 
+		\hspace*{#1 cm}
+		\ifthenelse{\boolean{print}}{#2}{\hphantom{#2}}  
+		\hspace*{#1 cm}
+} }
+
+\newcommand{\jd}[2][4]{\par
+	\begin{minipage}[t][#1cm][t]{0.92\linewidth}	
+		\ifthenelse{\boolean{print}}{#2}{}  
+	\end{minipage} 
+}	
+
+\usepackage{pifont}
+\setboolean{print}{false}
+
+
+% 中文字体是 思源黑体
+%\setCJKmainfont{SourceHanSansCN-Normal}
+
+% 设置英文字体
+\setmainfont{texgyrepagella-regular.otf} 
+
+
+\newcommand\BackgroundPic{
+\put(0,0){
+\parbox[b][\paperheight]{\paperwidth}{%
+\vfill
+\centering
+\includegraphics[width=\paperwidth,height=\paperheight,
+keepaspectratio]{background.png}%
+\vfill
+}}}
+
+
+\begin{document}
+\newgeometry{left=3cm, right=3cm,bottom=2.5cm,top=2.5cm}
+\AddToShipoutPicture{\BackgroundPic}
+\begin{center}
+	\fontsize{20pt}{12pt}\selectfont 政治二刷选择题错题每天整理
+\end{center}
+
+
+%马哲部分
+\input{chapter1}
+
+%毛概部分
+\input{chapter2}
+
+%近代史部分
+\input{chapter3}
+
+%思修部分
+\input{chapter4}
+
+
+
+
+
+
+	
+\end{document}
